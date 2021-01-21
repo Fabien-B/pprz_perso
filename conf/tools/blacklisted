@@ -1,0 +1,28 @@
+#Blacklisted tools
+#Add the name of the tool as defined in its xml file to hide it in the "Tools" menu in the paparazi center.
+#Lines starting with # are comments and will be ignored.
+#
+#Examples: (Uncomment to hide them in the paparazzi center)
+Gazebo
+ADS-B Intruders receiver
+Messages (Python)
+Ivy2Nmea
+Plot Meteo Profile
+BluegigaUsbDongleScanner
+Weather Station
+IridiumDialer
+Video Synchronizer
+AeronauticalInfo
+Attitude Visualizer
+GPSd position display
+RtpViewer
+OpenSky-Network Intruders
+Http Server
+SVInfo
+PayloadForward
+Wind
+rtcm2ivy
+BluegigaUsbDongle
+Link Combiner
+NatNet
+App Server
