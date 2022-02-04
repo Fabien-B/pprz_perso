@@ -34,17 +34,17 @@
       <attitude roll="0" throttle="0" vmode="throttle"/>
     </block>
     <block group="home" key="t" name="Takeoff" strip_button="Takeoff (wp CLIMB)" strip_icon="takeoff.png">
-      <exception cond="GetPosAlt() > GetAltRef()+25" deroute="csm"/>
+      <exception cond="GetPosAlt() @GT GetAltRef()+25" deroute="csm"/>
       <set value="0" var="autopilot.kill_throttle"/>
       <set value="0" var="autopilot.flight_time"/>
       <go from="HOME" pitch="15" throttle="1.0" vmode="throttle" wp="CLIMB"/>
     </block>
     <block group="csm" name="csm" strip_button="SimTrack" strip_icon="path.png">
-      <circle alt="GetAltRef()+40" radius="50" until="NavCircleCount() > 1" wp="csm" vmode="alt"/>
-      <circle alt="238" radius="50" until="NavCircleCount() > 2" wp="csm" vmode="alt"/>
+      <circle alt="GetAltRef()+40" radius="50" until="NavCircleCount() @GT 1" wp="csm" vmode="alt"/>
+      <circle alt="238" radius="50" until="NavCircleCount() @GT 2" wp="csm" vmode="alt"/>
     </block>
     <block group="track2" name="track2" strip_button="SimTrack" strip_icon="path.png">
-      <oval p1="wp1" p2="wp5" radius="60" until="nav_oval_count > 1"/>
+      <oval p1="wp1" p2="wp5" radius="60" until="nav_oval_count @GT 1"/>
     </block>
     <block group="csm" name="wait" strip_button="Wait">
       <circle alt="GetAltRef()+40" radius="50" wp="csm" vmode="alt"/>
@@ -59,11 +59,11 @@
     </block>
     <block name="land">
       <call_once fun="nav_compute_baseleg(WP_AF, WP_TD, WP__BASELEG, nav_radius)"/>
-      <circle radius="nav_radius" until="NavCircleCount() > 0.5" wp="_BASELEG"/>
-      <circle radius="nav_radius" until="And(NavQdrCloseTo(DegOfRad(baseleg_out_qdr)-(nav_radius/fabs(nav_radius))*10), 10 > fabs(GetPosAlt() - WaypointAlt(WP__BASELEG)))" wp="_BASELEG"/>
+      <circle radius="nav_radius" until="NavCircleCount() @GT 0.5" wp="_BASELEG"/>
+      <circle radius="nav_radius" until="And(NavQdrCloseTo(DegOfRad(baseleg_out_qdr)-(nav_radius/fabs(nav_radius))*10), 10 @GT fabs(GetPosAlt() - WaypointAlt(WP__BASELEG)))" wp="_BASELEG"/>
     </block>
     <block name="final">
-      <exception cond="GetAltRef() + 10 > GetPosAlt()" deroute="flare"/>
+      <exception cond="GetAltRef() + 10 @GT GetPosAlt()" deroute="flare"/>
       <go from="AF" hmode="route" vmode="glide" wp="TD"/>
     </block>
     <block name="flare">

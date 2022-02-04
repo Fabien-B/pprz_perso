@@ -61,19 +61,19 @@ static inline bool wp_qdr_aligned(uint8_t wp1, uint8_t wp2) {
       <attitude roll="0" throttle="0" vmode="throttle"/>
     </block>
     <block group="home" key="t" name="Takeoff" strip_button="Takeoff (wp CLIMB)" strip_icon="takeoff.png">
-      <exception cond="GetPosAlt() > GetAltRef()+25" deroute="csm"/>
+      <exception cond="GetPosAlt() @GT GetAltRef()+25" deroute="csm"/>
       <set value="0" var="autopilot.kill_throttle"/>
       <set value="0" var="autopilot.flight_time"/>
       <go from="HOME" pitch="15" throttle="1.0" vmode="throttle" wp="CLIMB"/>
     </block>
     <block group="csm" name="csm" strip_button="SimTrack" strip_icon="path.png">
-      <circle alt="GetAltRef()+40" radius="50" until="NavCircleCount() > 1" vmode="alt" wp="csm"/>
-      <circle alt="238" radius="50" until="And(NavCircleCount() > 1, wp_qdr_aligned(WP_csm,WP_wp4))" vmode="alt" wp="csm"/>
+      <circle alt="GetAltRef()+40" radius="50" until="NavCircleCount() @GT 1" vmode="alt" wp="csm"/>
+      <circle alt="238" radius="50" until="And(NavCircleCount() @GT 1, wp_qdr_aligned(WP_csm,WP_wp4))" vmode="alt" wp="csm"/>
     </block>
     <block group="track3" name="track3" strip_button="SimTrack" strip_icon="path.png">
       <go alt="GetAltRef()+120" wp="wp4"/>
-      <circle alt="GetAltRef()+120" radius="-150" until="And(NavCircleCount() > -1, wp_qdr_aligned(WP_wp4,WP_circ2))" wp="circ1"/>
-      <circle alt="GetAltRef()+120" radius="-150" until="And(NavCircleCount() > -1, wp_qdr_aligned(WP_circ2,WP_wp2))" wp="circ2"/>
+      <circle alt="GetAltRef()+120" radius="-150" until="And(NavCircleCount() @GT -1, wp_qdr_aligned(WP_wp4,WP_circ2))" wp="circ1"/>
+      <circle alt="GetAltRef()+120" radius="-150" until="And(NavCircleCount() @GT -1, wp_qdr_aligned(WP_circ2,WP_wp2))" wp="circ2"/>
     </block>
     <block group="track4" name="track4" strip_button="SimTrack" strip_icon="path.png">
       <go alt="GetAltRef()+120" wp="wp2"/>
@@ -93,11 +93,11 @@ static inline bool wp_qdr_aligned(uint8_t wp1, uint8_t wp2) {
     </block>
     <block name="land">
       <call_once fun="nav_compute_baseleg(WP_AF, WP_TD, WP__BASELEG, nav_radius)"/>
-      <circle radius="nav_radius" until="NavCircleCount() > 0.5" wp="_BASELEG"/>
-      <circle radius="nav_radius" until="And(NavQdrCloseTo(DegOfRad(baseleg_out_qdr)-(nav_radius/fabs(nav_radius))*10), 10 > fabs(GetPosAlt() - WaypointAlt(WP__BASELEG)))" wp="_BASELEG"/>
+      <circle radius="nav_radius" until="NavCircleCount() @GT 0.5" wp="_BASELEG"/>
+      <circle radius="nav_radius" until="And(NavQdrCloseTo(DegOfRad(baseleg_out_qdr)-(nav_radius/fabs(nav_radius))*10), 10 @GT fabs(GetPosAlt() - WaypointAlt(WP__BASELEG)))" wp="_BASELEG"/>
     </block>
     <block name="final">
-      <exception cond="GetAltRef() + 10 > GetPosAlt()" deroute="flare"/>
+      <exception cond="GetAltRef() + 10 @GT GetPosAlt()" deroute="flare"/>
       <go from="AF" hmode="route" vmode="glide" wp="TD"/>
     </block>
     <block name="flare">

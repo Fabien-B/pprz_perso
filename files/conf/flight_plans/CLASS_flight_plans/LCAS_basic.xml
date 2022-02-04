@@ -32,7 +32,7 @@
       <attitude pitch="0" roll="0" throttle="0" until="FALSE" vmode="throttle"/>
     </block>
     <block name="Takeoff" strip_button="Takeoff" strip_icon="takeoff.png">
-      <exception cond="stateGetPositionEnu_f()->z > 2.0" deroute="Standby"/>
+      <exception cond="stateGetPositionEnu_f() @DEREF z @GT 2.0" deroute="Standby"/>
       <call_once fun="NavSetWaypointHere(WP_CLIMB)"/>
       <stay climb="nav_climb_vspeed" vmode="climb" wp="CLIMB"/>
     </block>
@@ -67,7 +67,7 @@
     <block name="test yaw">
       <go wp="p1"/>
       <for from="1" to="16" var="i">
-        <heading alt="WaypointAlt(WP_p1)" course="90 * $i" until="stage_time > 3"/>
+        <heading alt="WaypointAlt(WP_p1)" course="90 * $i" until="stage_time @GT 3"/>
       </for>
       <deroute block="Standby"/>
     </block>

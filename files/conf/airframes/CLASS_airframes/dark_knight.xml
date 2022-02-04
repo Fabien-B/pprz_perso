@@ -17,7 +17,7 @@
 <airframe name="DarkKnight">
 
   <firmware name="fixedwing">
-    <define name="USE_I2C1"/>
+    <!--define name="USE_I2C1"/-->
     <define name="USE_GYRO_PITCH_RATE"/>
 
     <!--configure name="PERIODIC_FREQUENCY" value="100"/-->

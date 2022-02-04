@@ -19,13 +19,14 @@
 
     <module name="ahrs" type="float_dcm"/>
     <module name="ins" type="alt_float"/>
-    <module name="telemetry" type="xbee_api"/>  
+    <module name="telemetry" type="xbee_api"/>
+    <!--module name="telemetry" type="transparent"/-->
     
     <module name="imu" type="apogee">
     </module>
 
     <module name="gps" type="ublox">
-     <configure name="GPS_BAUD" value="B38400"/>
+     <configure name="GPS_BAUD" value="B115200"/>
     </module>
 
     <!--module name="air_data"/>
@@ -38,19 +39,24 @@
     <module name="navigation"/>
     <module name="takeoff_detect"/>
     
-    <module name="rust_demo_module"/>
-
     <module name="tlsf"/>
     <module name="pprzlog"/>
     <module name="logger" type="sd_chibios"/>
     <module name="flight_recorder"/>
     
-    <module name="e_identification_fr">
+    <module name="shell">
+      <configure name="SHELL_PORT" value="UART6"/>
+      <configure name="SHELL_BAUD" value="B115200"/>
+    </module>
+    <module name="sys_mon"/>
+    
+    <!--module name="e_identification_fr">
       <configure name="E_ID_PORT" value="UART6"/>
       <configure name="E_ID_BAUD" value="B115200"/>
-      <define name="ID_MANUFACTURER" value="ENA"  type="string"/>
-      <define name="ID_MODEL" value="ZAG"  type="string"/>
-      <define name="ID_SERIAL" value="JoLeRigolo"  type="string"/>
+    </module-->
+    <module name="extra_dl">
+      <configure name="EXTRA_DL_PORT" value="UART6"/>
+      <configure name="EXTRA_DL_BAUD" value="B115200"/>
     </module>
 
   </firmware>
@@ -145,11 +151,10 @@
   </section>
 
   <section name="MISC">
-    <define name="XBEE_CHANNEL" value="17"/>
+    <!--define name="XBEE_CHANNEL" value="17"/-->
     <define name="NOMINAL_AIRSPEED" value="12." unit="m/s"/>
     <define name="CARROT" value="5." unit="s"/>
     <define name="DEFAULT_CIRCLE_RADIUS" value="80."/>
-    <!--define name="XBEE_INIT" value="\"ATID3332\rATCH17\rATP1\rATBD6\r\""/-->
   </section>
 
  <section name="VERTICAL CONTROL" prefix="V_CTL_">
@@ -209,6 +214,8 @@
   <section name="SIMULATOR" prefix="NPS_">
     <define name="JSBSIM_LAUNCHSPEED" value="15"/>
     <define name="JSBSIM_MODEL" value="easystar" type="string"/>
-    <define name="SENSORS_PARAMS" value="nps_sensors_params_default.h" type="string"/>
+    <define name="SENSORS_PARAMS"
+    value="nps_sensors_params_default.h"
+    type="string"/>
   </section>
 </airframe>

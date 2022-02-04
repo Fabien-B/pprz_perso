@@ -1,0 +1,173 @@
+<!DOCTYPE flight_plan SYSTEM "flight_plan.dtd">
+            <flight_plan alt="132.2" ground_alt="92.2" lat0="49.09605" 
+            lon0="2.03591" name="Test" max_dist_from_home="2000" security_height="2">
+            <header> #include "autopilot.h" 
+            #include "subsystems/datalink/datalink.h"
+            #include "subsystems/electrical.h"
+            #include "subsystems/radio_control.h"
+            </header>
+            <waypoints>
+            <waypoint name="VOR0" lon="2.03591" lat="49.09605"/>
+    <waypoint name="0" lon="2.040747874" lat="49.096644"/>
+    <waypoint name="HOME" lon="2.03591" lat="49.09605"/>
+    <waypoint name="STDBY" lon="2.03641" lat="49.09655"/>
+    <waypoint name="_BASELEG" lon="2.03641" lat="49.09605"/>
+    <waypoint name="2" lon="2.040747874" lat="49.096644"/>
+    <waypoint name="THR302" lon="2.045608" lat="49.094917"/>
+    <waypoint name="THR303" lon="2.045608" lat="49.094917"/>
+    <waypoint name="LOC3" lon="2.044444" lat="49.09905"/>
+    <waypoint name="_C_0" lon="2.035635311519179" lat="49.09604999967414"/>
+    <waypoint name="_C_1" lon="2.0357485426353072" lat="49.095904486795895"/>
+    <waypoint name="_C_2" lon="2.0359624128466383" lat="49.095873440525004"/>
+    <waypoint name="_C_3" lon="2.040702612944093" lat="49.09645544793007"/>
+    <waypoint name="_C_4" lon="2.0454790449255995" lat="49.09475818937811"/>
+    <waypoint name="_C_5" lon="2.045692881178809" lat="49.09474593907046"/>
+    <waypoint name="_C_6" lon="2.045869238014362" lat="49.09486141865011"/>
+    <waypoint name="_C_7" lon="2.0447145318664406" lat="49.099081232752376"/>
+    <waypoint name="_C_8" lon="2.044528888831871" lat="49.099221060867315"/>
+    <waypoint name="_C_9" lon="2.0442825319296922" lat="49.09919551297893"/>
+    <waypoint name="_C_10" lon="2.0441734684740416" lat="49.099018766615465"/>
+    <waypoint name="_C_11" lon="2.0452335907691688" lat="49.09525467670161"/>
+    <waypoint name="_C_12" lon="2.0407478740000005" lat="49.09682386407273"/>
+    <waypoint name="_C_13" lon="2.035857586780502" lat="49.096226559451274"/>
+    <waypoint name="_C_14" lon="2.035635311519179" lat="49.09604999967414"/>
+    <waypoint name="_G_0" lon="2.035772655759589" lat="49.096049999918534"/>
+    <waypoint name="_G_1" lon="2.0359362064699265" lat="49.095961720265464"/>
+    <waypoint name="_G_2" lon="2.0407252434251544" lat="49.09654972395614"/>
+    <waypoint name="_G_3" lon="2.0455435223596607" lat="49.094837594707016"/>
+    <waypoint name="_G_4" lon="2.045738619080307" lat="49.094889209398744"/>
+    <waypoint name="_G_5" lon="2.0445792658906603" lat="49.09906561645521"/>
+    <waypoint name="_G_6" lon="2.044486444342792" lat="49.099135530441444"/>
+    <waypoint name="_G_7" lon="2.0443087341944604" lat="49.09903438338676"/>
+    <waypoint name="_G_8" lon="2.0454207959393402" lat="49.0950858380937"/>
+    <waypoint name="_G_9" lon="2.0407478740000005" lat="49.09673393203637"/>
+    <waypoint name="_G_10" lon="2.0358837934368585" lat="49.0961382797286"/>
+    <waypoint name="_G_11" lon="2.035772655759589" lat="49.096049999918534"/>
+    </waypoints>
+        <sectors>
+        <sector name="GreenZone" color="green">
+    <corner name="_G_11"/>
+        <corner name="_G_10"/>
+        <corner name="_G_9"/>
+        <corner name="_G_8"/>
+        <corner name="_G_7"/>
+        <corner name="_G_6"/>
+        <corner name="_G_5"/>
+        <corner name="_G_4"/>
+        <corner name="_G_3"/>
+        <corner name="_G_2"/>
+        <corner name="_G_1"/>
+        <corner name="_G_0"/>
+        </sector>
+    <sector name="Contingency" color="orange">
+    <corner name="_C_14"/>
+        <corner name="_C_13"/>
+        <corner name="_C_12"/>
+        <corner name="_C_11"/>
+        <corner name="_C_10"/>
+        <corner name="_C_9"/>
+        <corner name="_C_8"/>
+        <corner name="_C_7"/>
+        <corner name="_C_6"/>
+        <corner name="_C_5"/>
+        <corner name="_C_4"/>
+        <corner name="_C_3"/>
+        <corner name="_C_2"/>
+        <corner name="_C_1"/>
+        <corner name="_C_0"/>
+        </sector>
+    </sectors>
+            <exceptions>
+            <exception cond="((radio_control.status == RC_REALLY_LOST) @AND datalink_time > 10 @AND GpsIsLost() @AND
+              !(IndexOfBlock('Takeoff') > nav_block) @AND
+              !(nav_block >= IndexOfBlock('land here')))" deroute="EmergencyKill"/>
+
+            <exception cond="((radio_control.status == RC_REALLY_LOST) @AND
+              (radio_control.time_since_last_frame > 60) @AND
+              !(IndexOfBlock('Takeoff') > nav_block) @AND
+              !(nav_block >= IndexOfBlock('land here')))" deroute="EmergencyLanding"/>
+        
+            <exception cond="(electrical.bat_low @AND
+              !(IndexOfBlock('Takeoff') > nav_block) @AND
+              !(nav_block >= IndexOfBlock('land here')))" deroute="EmergencyLanding"/>
+            
+            <exception cond="(GpsIsLost() @AND
+              !(IndexOfBlock('Takeoff') > nav_block) @AND
+              !(nav_block >= IndexOfBlock('land here')))" deroute="EmergencyLanding"/>
+        
+            <exception cond="(datalink_time > 10 @AND
+              !(IndexOfBlock('Takeoff') > nav_block) @AND
+              !(nav_block >= IndexOfBlock('land here')))" deroute="EmergencyLanding"/>
+        
+            <exception cond="(!InsideGreenZone(GetPosX(), GetPosY()) @AND
+              !(IndexOfBlock('Takeoff') > nav_block) @AND
+              !(nav_block >= IndexOfBlock('land here')))" deroute="EmergencyLanding"/>
+            </exceptions>
+            <blocks>
+                <block name="Wait GPS">
+                    <call_once fun="NavKillThrottle()"/>
+                    <while cond="!GpsFixValid()"/>
+                </block>
+                <block name="Geo init">
+                    <while cond="LessThan(NavBlockTime(), 10)"/>
+                    <call_once fun="NavSetGroundReferenceHere()"/>
+                </block>
+                <block name="Holding point">
+                    <call_once fun="NavKillThrottle()"/>
+                    <attitude pitch="0" roll="0" throttle="0" vmode="throttle" until="FALSE"/>
+                </block>
+                <block name="Start Engine">
+                    <call_once fun="NavResurrect()"/>
+                    <attitude pitch="0" roll="0" throttle="0" vmode="throttle" until="FALSE"/>
+                </block>
+                <block name="Takeoff" strip_button="Takeoff" strip_icon="takeoff.png">
+                    <exception cond="stateGetPositionEnu_f() @DEREF z @GT 2.0" deroute="Standby"/>
+                    <call_once fun="NavSetWaypointHere(WP_STDBY)"/>
+                    <stay vmode="climb" climb="nav_climb_vspeed" wp="STDBY"/>
+                </block>
+                <block name="Standby" strip_button="Standby" strip_icon="home.png">
+                    <stay wp="STDBY"/>
+                </block>
+                <block name="Go To 0">
+                        <go from="VOR0" wp="0" hmode="route"/>
+                        <exception cond="(GetPosAlt() > GetAltRef() + 100)" deroute="EmergencyLanding"/>
+    </block>
+                    <block name="Go To THR302">
+                        <go from="2" wp="THR302" hmode="route"/>
+                        <exception cond="(GetPosAlt() > GetAltRef() + 100)" deroute="EmergencyLanding"/>
+    </block>
+                    <block name="Go To LOC3">
+                        <go from="THR303" wp="LOC3" hmode="route"/>
+                        <exception cond="(GetPosAlt() > GetAltRef() + 100)" deroute="EmergencyLanding"/>
+    </block>
+                    <block name="Standby_End">
+                <call_once fun="NavSetWaypointHere(WP_STDBY)"/>
+                <stay wp="STDBY"/>
+            </block>
+            <block name="land here" strip_button="Land Here" strip_icon="land-right.png">
+                <call_once fun="NavSetWaypointHere(WP_STDBY)"/>
+            </block>
+            <block name="land">
+                <go wp="STDBY"/>
+            </block>
+            <block name="flare">
+                <exception cond="NavDetectGround()" deroute="Holding point"/>
+                <exception cond="!nav_is_in_flight()" deroute="landed"/>
+                <call_once fun="NavStartDetectGround()"/>
+                <stay climb="nav_descend_vspeed" vmode="climb" wp="STDBY"/>
+            </block>
+            <block name="landed">
+                <attitude pitch="0" roll="0" throttle="0" vmode="throttle" until="FALSE"/>
+            </block>
+            <block name="EmergencyKill">
+                <call_once fun="NavKillThrottle()"/>
+            </block>
+            <block name="EmergencyLanding" pre_call="if (!InsideContingency(GetPosX(), GetPosY())) NavKillThrottle();">
+                <call_once fun="NavSetWaypointHere(WP_STDBY)"/>
+                <call_once fun="NavStartDetectGround()"/>
+                <stay wp="STDBY" vmode="climb" climb="-1.5" until="NavDetectGround()"/>
+                <attitude pitch="0" roll="0" throttle="0" vmode="throttle" until="FALSE"/>
+            </block>
+        </blocks>
+        </flight_plan>
+        
