@@ -45,10 +45,10 @@
     <!-- <module name="nav" type="survey_polygon"/> -->
     <!-- <module name="nav" type="catapult"/> -->
 
-    <module name="tlsf"/>
-    <module name="pprzlog"/>
-    <module name="logger" type="sd_chibios"/>
-    <module name="flight_recorder"/>
+    <!--module name="tlsf"/-->
+    <!--module name="pprzlog"/-->
+    <!--module name="logger" type="sd_chibios"/-->
+    <!--module name="flight_recorder"/-->
 
     <module name="gps" type="ublox">
       <configure name="GPS_BAUD" value="B115200"/>
@@ -83,10 +83,10 @@
       <define name="AIRSPEED_SEND_RAW"/>
     </module> -->
     
-    <module name="droneitgps">
+    <!--module name="droneitgps">
       <configure name="DRONEIT_PORT" value="UART6"/>
       <configure name="DRONEIT_BAUD" value="B9600"/>
-    </module>
+    </module-->
     
     <!--configure name="RTOS_DEBUG" value="1"/-->
 

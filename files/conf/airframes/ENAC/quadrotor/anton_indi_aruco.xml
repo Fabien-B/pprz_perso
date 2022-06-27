@@ -28,11 +28,11 @@
 
     <module name="telemetry" type="xbee_api">
     <!--module name="telemetry"     type="transparent"-->
-      <!--configure name="MODEM_BAUD" value="B57600"/-->
+      <!--configure name="MODEM_PORT" value="usb_serial"/-->
       <!--configure name="MODEM_BAUD" value="UART3"/-->
     </module>
     
-    <module name="conf_storage"/>
+    <!--module name="conf_storage"/-->
 
     <module name="motor_mixing"/>
 
@@ -82,6 +82,11 @@
       <define name="SENSOR_SYNC_SEND_SONAR"/>
       <define name="SONAR_SCALE" value="0.0031"/>
     </module>
+    
+    <!--module name="jevois">
+        <configure name="JEVOIS_UART" value="UART3" description="UART on which Jevois camera is connected"/>
+    </module>
+    <module name="tag_tracking"/-->
     
     <module name="agl_dist">
         <!--define name="USE_SONAR"/-->
