@@ -1,0 +1,51 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "options": {
+        "env": {
+            "PAPARAZZI_HOME":"${workspaceFolder}",
+            "PAPARAZZI_SRC":"${workspaceFolder}",
+        }
+    },
+    "tasks": [
+        {
+            "label": "Build $(check)",
+            "type": "shell",
+            "command": "make -C ${workspaceFolder} -f Makefile.ac AIRCRAFT=${input:AIRCRAFT} ${input:TARGET}.compile"
+        },
+        {
+            "label": "Upload $(arrow-right)",
+            "type": "shell",
+            "command": "make -C ${workspaceFolder} -f Makefile.ac AIRCRAFT=${input:AIRCRAFT} ${input:TARGET}.upload"
+        },
+        {
+            "label": "Clean $(trash)",
+            "type": "shell",
+            "command": "make -C ${workspaceFolder} -f Makefile.ac AIRCRAFT=${input:AIRCRAFT} clean_ac"
+        },
+    ],
+    "inputs": [
+        {
+            "id": "AIRCRAFT",
+            "type": "pickString",
+            "description": "Paparazzi Aircraft",
+            "options": [
+                "CHIMERA",
+                "APOGEE",
+                "Zagi_apogee"
+            ]
+        },
+        {
+            "id": "TARGET",
+            "type": "pickString",
+            "description": "Paparazzi target",
+            "options": [
+                "ap",
+                "nps"
+            ]
+        }
+    ],
+    
+}
+

@@ -1,0 +1,77 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "RoBoBee nps",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/var/aircrafts/RoBoBee/nps/simsitl",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Activer l'impression en mode Pretty pour gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Définir la version désassemblage sur Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        
+    
+        {
+            "name": "BMP Launch",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/var/aircrafts/${input:AIRCRAFT}/ap/obj/ap.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "bmp",
+            "BMPGDBSerialPort": "/dev/bmp_gdb",
+            "gdbPath": "gdb-multiarch"
+            //"showDevDebugOutput": true
+        },
+        {
+            "name": "BMP Attach",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/var/aircrafts/${input:AIRCRAFT}/ap/obj/ap.elf",
+            "request": "attach",
+            "type": "cortex-debug",
+            "servertype": "bmp",
+            "BMPGDBSerialPort": "/dev/bmp_gdb",
+            "gdbPath": "gdb-multiarch"
+            //"showDevDebugOutput": true
+        },
+    ],
+    "inputs": [
+        {
+            "id": "AIRCRAFT",
+            "type": "pickString",
+            "description": "Paparazzi Aircraft",
+            "options": [
+                "CHIMERA",
+                "APOGEE",
+                "Zagi_apogee"
+            ]
+        },
+        {
+            "id": "TARGET",
+            "type": "pickString",
+            "description": "Paparazzi target",
+            "options": [
+                "ap",
+                "nps"
+            ]
+        }
+    ]
+}
